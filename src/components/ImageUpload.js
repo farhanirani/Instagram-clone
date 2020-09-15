@@ -73,7 +73,7 @@ function ImageUpload({ username }) {
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
         />
-        <Input required key={image} type="file" onChange={handleChange} />
+        <Input required type="file" onChange={handleChange} />
         <Button type="submit">Upload</Button>
       </div>
     </form>

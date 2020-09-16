@@ -3,27 +3,58 @@ import "./Post.css";
 import Avatar from "@material-ui/core/Avatar";
 import { db } from "../firebase";
 import firebase from "firebase";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 function Post({ postId, user, username, caption, imageurl }) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState([]);
+  const [likes, setLikes] = useState([]);
+  const [liked, setLiked] = useState(false);
 
   useEffect(() => {
-    let unsubscribe;
-    if (postId) {
-      unsubscribe = db
-        .collection("posts")
-        .doc(postId)
-        .collection("comments")
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) => {
-          setComments(snapshot.docs.map((doc) => doc.data()));
-        });
-    }
-    return () => {
-      unsubscribe();
-    };
+    db.collection("posts")
+      .doc(postId)
+      .collection("comments")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        setComments(snapshot.docs.map((doc) => doc.data()));
+      });
   }, [postId]);
+
+  useEffect(() => {
+    db.collection("posts")
+      .doc(postId)
+      .collection("likes")
+      .onSnapshot((snapshot) => {
+        setLikes(snapshot.docs.map((doc) => doc.data()));
+      });
+  }, [postId]);
+
+  const likePost = async (e) => {
+    e.preventDefault();
+    if (user && user.displayName) {
+      if (liked) {
+        var query = db
+          .collection("posts")
+          .doc(postId)
+          .collection("likes")
+          .where("id", "==", user.uid);
+        query.get().then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            doc.ref.delete();
+          });
+        });
+        setLiked(false);
+      } else {
+        db.collection("posts").doc(postId).collection("likes").add({
+          id: user.uid,
+        });
+
+        setLiked(true);
+      }
+    }
+  };
 
   const postComment = (e) => {
     e.preventDefault();
@@ -57,12 +88,29 @@ function Post({ postId, user, username, caption, imageurl }) {
       <img className="post__image" src={imageurl} alt="" />
 
       <h4 className="post__text">
+        <div className="post__likes">
+          {user && (
+            <div className="like__logo">
+              {liked ? (
+                <FavoriteIcon onClick={likePost} />
+              ) : (
+                <FavoriteBorderIcon onClick={likePost} />
+              )}
+            </div>
+          )}
+
+          {likes.length === 1 ? (
+            <strong>{likes.length} like</strong>
+          ) : (
+            <strong>{likes.length} likes</strong>
+          )}
+        </div>
         <strong>{username}</strong> {caption}
       </h4>
 
       <div className="post__comments">
         {comments.map((comment) => (
-          <p>
+          <p key={comment.timestamp}>
             <strong>{comment.username}</strong> {comment.text}
           </p>
         ))}

@@ -47,3 +47,11 @@
   border-top: 1px solid lightgray;
   background-color: transparent;
 }
+
+.post__likes {
+  display: flex;
+}
+
+.like__logo {
+  margin-right: 10px;
+}

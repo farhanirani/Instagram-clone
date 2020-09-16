@@ -31,6 +31,15 @@ function Post({ postId, user, username, caption, imageurl }) {
       });
   }, [postId]);
 
+  useEffect(() => {
+    if (user) {
+      for (var i = 0; i < likes.length; i++) {
+        if (likes[i].id === user.uid) setLiked(true);
+      }
+    }
+    // eslint-disable-next-line
+  }, [likes]);
+
   const likePost = async (e) => {
     e.preventDefault();
     if (user && user.displayName) {
@@ -53,6 +62,8 @@ function Post({ postId, user, username, caption, imageurl }) {
 
         setLiked(true);
       }
+    } else {
+      alert("Please login first");
     }
   };
 
@@ -89,15 +100,13 @@ function Post({ postId, user, username, caption, imageurl }) {
 
       <h4 className="post__text">
         <div className="post__likes">
-          {user && (
-            <div className="like__logo">
-              {liked ? (
-                <FavoriteIcon onClick={likePost} />
-              ) : (
-                <FavoriteBorderIcon onClick={likePost} />
-              )}
-            </div>
-          )}
+          <div className="like__logo">
+            {liked ? (
+              <FavoriteIcon onClick={likePost} />
+            ) : (
+              <FavoriteBorderIcon onClick={likePost} />
+            )}
+          </div>
 
           {likes.length === 1 ? (
             <strong>{likes.length} like</strong>

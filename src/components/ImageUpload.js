@@ -74,7 +74,15 @@ function ImageUpload({ username }) {
           onChange={(e) => setCaption(e.target.value)}
         />
         <Input required type="file" onChange={handleChange} />
-        <Button type="submit">Upload</Button>
+        <Button
+          style={{ marginTop: 20 }}
+          variant="contained"
+          color="primary"
+          className="upload__button"
+          type="submit"
+        >
+          Upload
+        </Button>
       </div>
     </form>
   );

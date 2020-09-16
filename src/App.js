@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    outline: "none",
   },
 }));
 
@@ -40,6 +41,7 @@ function App() {
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [opensignin, setOpensignin] = useState(false);
+  const [openImageup, setOpenImageup] = useState(false);
 
   const [username, setUname] = useState("");
   const [email, setEmail] = useState("");
@@ -92,12 +94,20 @@ function App() {
 
   const signin = (e) => {
     e.preventDefault();
-
     auth
       .signInWithEmailAndPassword(email, password)
       .catch((err) => alert(err.message));
 
     setOpensignin(false);
+  };
+
+  const uploadModalClicked = (e) => {
+    console.log(user);
+    if (user && user.displayName) {
+      setOpenImageup(true);
+    } else {
+      alert("Please login first");
+    }
   };
 
   //
@@ -169,6 +179,14 @@ function App() {
         </div>
       </Modal>
 
+      {user && (
+        <Modal open={openImageup} onClose={() => setOpenImageup(false)}>
+          <div style={modalStyle} className={classes.paper}>
+            <ImageUpload username={user.displayName} />
+          </div>
+        </Modal>
+      )}
+
       <div className="app__header">
         <div>
           <img
@@ -191,6 +209,16 @@ function App() {
 
       <div className="app__body">
         <div className="left__side">
+          <div className="image__upload">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={uploadModalClicked}
+            >
+              Post Image
+            </Button>
+          </div>
+
           {posts.map(({ id, post }) => (
             <Post
               key={id}
@@ -201,14 +229,6 @@ function App() {
               imageurl={post.imageurl}
             />
           ))}
-
-          <div className="image__upload">
-            {user?.displayName ? (
-              <ImageUpload username={user.displayName} />
-            ) : (
-              <h3>Login to upload</h3>
-            )}
-          </div>
         </div>
 
         <div className="right__side">

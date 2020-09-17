@@ -33,12 +33,22 @@ function Post({ postId, user, username, caption, imageurl }) {
 
   useEffect(() => {
     if (user) {
+      var flag = 0;
       for (var i = 0; i < likes.length; i++) {
-        if (likes[i].id === user.uid) setLiked(true);
+        if (likes[i].id === user.uid) {
+          setLiked(true);
+          flag = 1;
+          break;
+        }
       }
+      if (flag === 0) {
+        setLiked(false);
+      }
+    } else {
+      setLiked(false);
     }
     // eslint-disable-next-line
-  }, [likes]);
+  }, [likes, user]);
 
   const likePost = async (e) => {
     e.preventDefault();

@@ -15,6 +15,7 @@
 .post__text {
   font-weight: normal;
   padding: 10px;
+  margin-bottom: -10px;
 }
 
 .post__header {
@@ -34,18 +35,26 @@
 .comment__box {
   display: flex;
 }
+
 .comment__input {
   flex: 1;
   border: none;
-  padding: 10px;
+  outline: none;
+  padding: 25px 18px;
   border-top: 1px solid lightgray;
 }
+
 .comment__button {
   flex: 0;
   border: none;
-  color: #6082a3;
+  outline: none;
+  padding-right: 15px;
+  color: #b4e0fc;
   border-top: 1px solid lightgray;
   background-color: transparent;
+}
+.comment__button:enabled {
+  color: #57b9f9;
 }
 
 .post__likes {
@@ -54,4 +63,10 @@
 
 .like__logo {
   margin-right: 10px;
+}
+
+.post__likes__delete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

@@ -1,27 +1,47 @@
 import React, { useEffect, useState } from "react";
 import "./Post.css";
-import Avatar from "@material-ui/core/Avatar";
 import { db } from "../firebase";
 import firebase from "firebase";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
-function Post({ postId, user, username, caption, imageurl }) {
+import { IconButton, Avatar } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import { makeStyles } from "@material-ui/core/styles";
+import { deepPurple } from "@material-ui/core/colors";
+
+const useStyles = makeStyles((theme) => ({
+  purple: {
+    color: theme.palette.getContrastText(deepPurple["A700"]),
+    backgroundColor: deepPurple["A700"],
+  },
+}));
+
+function Post({ postId, postCreaterId, user, username, caption, imageurl }) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState([]);
   const [likes, setLikes] = useState([]);
   const [liked, setLiked] = useState(false);
+  const classes = useStyles();
 
+  // Get the comments
   useEffect(() => {
     db.collection("posts")
       .doc(postId)
       .collection("comments")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
-        setComments(snapshot.docs.map((doc) => doc.data()));
+        setComments(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            comment: doc.data(),
+          }))
+        );
       });
   }, [postId]);
 
+  // Get the likes
   useEffect(() => {
     db.collection("posts")
       .doc(postId)
@@ -31,6 +51,7 @@ function Post({ postId, user, username, caption, imageurl }) {
       });
   }, [postId]);
 
+  // Check which posts the current user has liked
   useEffect(() => {
     if (user) {
       var flag = 0;
@@ -79,16 +100,37 @@ function Post({ postId, user, username, caption, imageurl }) {
 
   const postComment = (e) => {
     e.preventDefault();
-
     if (user && user.displayName && comment.length) {
       db.collection("posts").doc(postId).collection("comments").add({
         text: comment,
         username: user.displayName,
+        commentCreaterId: user.uid,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
       setComment("");
     } else {
       alert("Please sign in first");
+    }
+  };
+
+  const deletePost = (e) => {
+    e.preventDefault();
+    if (user.uid === postCreaterId) {
+      db.collection("posts").doc(postId).delete();
+    } else {
+      alert("Not authorized!!!");
+    }
+  };
+
+  const deleteComment = async (commentid, commentpassed) => {
+    if (user && user.uid === commentpassed.commentCreaterId) {
+      db.collection("posts")
+        .doc(postId)
+        .collection("comments")
+        .doc(commentid)
+        .delete();
+    } else {
+      alert("Not authorized!!!");
     }
   };
 
@@ -98,7 +140,7 @@ function Post({ postId, user, username, caption, imageurl }) {
     <div className="post">
       <div className="post__header">
         <Avatar
-          className="post__avatar"
+          className={`post__avatar ${classes.purple}`}
           alt={username}
           src="/static/images/avatar/1.jpg"
         />
@@ -113,38 +155,68 @@ function Post({ postId, user, username, caption, imageurl }) {
         alt=""
       />
 
-      <h4 className="post__text">
-        <div className="post__likes">
-          <div className="like__logo">
-            {liked ? (
-              <FavoriteIcon onClick={likePost} />
+      <div className="post__text">
+        <div className="post__likes__delete">
+          <div className="post__likes">
+            <div className="like__logo">
+              {liked ? (
+                <FavoriteIcon onClick={likePost} />
+              ) : (
+                <FavoriteBorderIcon onClick={likePost} />
+              )}
+            </div>
+
+            {likes.length === 1 ? (
+              <strong>{likes.length} like</strong>
             ) : (
-              <FavoriteBorderIcon onClick={likePost} />
+              <strong>{likes.length} likes</strong>
             )}
           </div>
-
-          {likes.length === 1 ? (
-            <strong>{likes.length} like</strong>
-          ) : (
-            <strong>{likes.length} likes</strong>
-          )}
+          <div className="post__likes__right">
+            <IconButton onClick={deletePost}>
+              <DeleteIcon
+                style={
+                  user && user.uid === postCreaterId
+                    ? { visibility: "visible" }
+                    : { visibility: "hidden" }
+                }
+                color="secondary"
+              />
+            </IconButton>
+          </div>
         </div>
         <strong>{username}</strong> {caption}
-      </h4>
+      </div>
 
       <div className="post__comments">
-        {comments.map((comment) => (
-          <p key={comment.timestamp}>
-            <strong>{comment.username}</strong> {comment.text}
-          </p>
+        {comments.map(({ id, comment }) => (
+          <>
+            {user.uid === comment.commentCreaterId && (
+              <DeleteOutlineIcon
+                fontSize="small"
+                style={{
+                  cursor: "pointer",
+                  float: "right",
+                }}
+                onClick={() => {
+                  deleteComment(id, comment);
+                }}
+              />
+            )}
+
+            <p style={{ textAlign: "justify" }} key={comment.timestamp}>
+              <strong>{comment.username}</strong> {comment.text}
+            </p>
+          </>
         ))}
       </div>
+
       {user && (
         <form className="comment__box">
           <input
             className="comment__input"
             type="text"
-            placeholder="Enter a comment"
+            placeholder="Add a comment..."
             value={comment}
             onChange={(e) => {
               setComment(e.target.value);
@@ -156,7 +228,7 @@ function Post({ postId, user, username, caption, imageurl }) {
             type="submit"
             onClick={postComment}
           >
-            Post
+            <strong>Post</strong>
           </button>
         </form>
       )}

@@ -52,7 +52,7 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         // user logged in
-        console.log(authUser);
+        // console.log(authUser);
         setUser(authUser);
       } else {
         // userlogged out
@@ -102,7 +102,7 @@ function App() {
   };
 
   const uploadModalClicked = (e) => {
-    console.log(user);
+    // console.log(user);
     if (user && user.displayName) {
       setOpenImageup(true);
     } else {
@@ -194,7 +194,7 @@ function App() {
       {user && (
         <Modal open={openImageup} onClose={() => setOpenImageup(false)}>
           <div style={modalStyle} className={classes.paper}>
-            <ImageUpload username={user.displayName} />
+            <ImageUpload username={user.displayName} userid={user.uid} />
           </div>
         </Modal>
       )}
@@ -240,8 +240,9 @@ function App() {
 
       <div className="app__body">
         <div className="left__side">
-          <div className="image__upload">
+          <div className="image__upload__app">
             <Button
+              disableElevation
               variant="contained"
               color="primary"
               onClick={uploadModalClicked}
@@ -254,6 +255,7 @@ function App() {
             <Post
               key={id}
               postId={id}
+              postCreaterId={post.userid}
               user={user}
               username={post.username}
               caption={post.caption}

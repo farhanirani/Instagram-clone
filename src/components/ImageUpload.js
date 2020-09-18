@@ -4,7 +4,7 @@ import { storage, db } from ".././firebase";
 import firebase from "firebase";
 import "./ImageUpload.css";
 
-function ImageUpload({ username }) {
+function ImageUpload({ username, userid }) {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [caption, setCaption] = useState("");
@@ -48,6 +48,7 @@ function ImageUpload({ username }) {
               caption: caption,
               imageurl: url,
               username: username,
+              userid: userid,
             });
 
             setProgress(0);
@@ -61,6 +62,11 @@ function ImageUpload({ username }) {
   return (
     <form onSubmit={handleUpload}>
       <div className="image__upload">
+        <img
+          className="app__headerImage"
+          src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+          alt=""
+        />
         <progress style={{ width: "100%" }} value={progress} max="100" />
         <Input
           required

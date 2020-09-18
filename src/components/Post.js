@@ -191,7 +191,7 @@ function Post({ postId, postCreaterId, user, username, caption, imageurl }) {
       <div className="post__comments">
         {comments.map(({ id, comment }) => (
           <>
-            {user.uid === comment.commentCreaterId && (
+            {user && user.uid === comment.commentCreaterId && (
               <DeleteOutlineIcon
                 fontSize="small"
                 style={{

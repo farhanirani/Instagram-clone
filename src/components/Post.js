@@ -106,7 +106,12 @@ function Post({ postId, user, username, caption, imageurl }) {
         <h3>{username}</h3>
       </div>
 
-      <img className="post__image" src={imageurl} alt="" />
+      <img
+        onDoubleClick={likePost}
+        className="post__image"
+        src={imageurl}
+        alt=""
+      />
 
       <h4 className="post__text">
         <div className="post__likes">

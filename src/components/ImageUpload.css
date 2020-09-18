@@ -1,7 +1,7 @@
 .image__upload {
   display: flex;
   flex-direction: column;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 .image__upload > * {

@@ -126,25 +126,31 @@ function App() {
             />
             <Input
               autoFocus={true}
-              placeholder="username"
+              placeholder="Username"
               type="text"
               value={username}
               onChange={(e) => setUname(e.target.value)}
             />
             <Input
-              placeholder="email"
+              placeholder="Email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <Input
-              placeholder="password"
+              placeholder="Password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <Button type="submit" onClick={signup}>
+            <Button
+              style={{ marginTop: 20 }}
+              variant="contained"
+              color="primary"
+              type="submit"
+              onClick={signup}
+            >
               Sign Up
             </Button>
           </form>
@@ -161,18 +167,24 @@ function App() {
             />
             <Input
               autoFocus={true}
-              placeholder="email"
+              placeholder="Email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <Input
-              placeholder="password"
+              placeholder="Password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button type="submit" onClick={signin}>
+            <Button
+              style={{ marginTop: 20 }}
+              variant="contained"
+              color="primary"
+              type="submit"
+              onClick={signin}
+            >
               Sign In
             </Button>
           </form>
@@ -190,6 +202,10 @@ function App() {
       <div className="app__header">
         <div>
           <img
+            onClick={() => {
+              window.scrollTo(0, 0);
+            }}
+            style={{ marginTop: 10 }}
             className="app__headerImage"
             src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
             alt=""
@@ -197,11 +213,26 @@ function App() {
         </div>
         <div>
           {user ? (
-            <Button onClick={() => auth.signOut()}>Logout</Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => auth.signOut()}
+            >
+              Logout
+            </Button>
           ) : (
             <div className="app__logincontainer">
-              <Button onClick={() => setOpen(true)}>Sign Up</Button>
-              <Button onClick={() => setOpensignin(true)}>Sign In</Button>
+              <Button variant="contained" onClick={() => setOpen(true)}>
+                Sign Up
+              </Button>
+              <Button
+                style={{ marginLeft: 10 }}
+                variant="contained"
+                color="primary"
+                onClick={() => setOpensignin(true)}
+              >
+                Sign In
+              </Button>
             </div>
           )}
         </div>

@@ -7,8 +7,15 @@
   margin-bottom: 40px;
 }
 
+@media only screen and (max-width: 600px) {
+  .post {
+    min-width: 100%;
+  }
+}
+
 .post__image {
   width: 100%;
+  border-top: 1px solid lightgray;
   object-fit: contain;
 }
 
@@ -29,7 +36,17 @@
 }
 
 .post__comments {
-  padding: 20px;
+  padding: 10px;
+}
+
+.view__all {
+  padding: 20px 0 0 10px;
+  margin-bottom: -10px;
+}
+
+.view__all p {
+  cursor: pointer;
+  opacity: 0.5;
 }
 
 .comment__box {

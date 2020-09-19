@@ -24,6 +24,7 @@ function Post({ postId, postCreaterId, user, username, caption, imageurl }) {
   const [likes, setLikes] = useState([]);
   const [liked, setLiked] = useState(false);
   const classes = useStyles();
+  const [viewmore, setViewmore] = useState(false);
 
   // Get the comments
   useEffect(() => {
@@ -147,14 +148,12 @@ function Post({ postId, postCreaterId, user, username, caption, imageurl }) {
 
         <h3>{username}</h3>
       </div>
-
       <img
         onDoubleClick={likePost}
         className="post__image"
         src={imageurl}
         alt=""
       />
-
       <div className="post__text">
         <div className="post__likes__delete">
           <div className="post__likes">
@@ -188,8 +187,19 @@ function Post({ postId, postCreaterId, user, username, caption, imageurl }) {
         <strong>{username}</strong> {caption}
       </div>
 
+      {comments.length > 2 && (
+        <div className="view__all" onClick={() => setViewmore(!viewmore)}>
+          {viewmore ? <p> See less</p> : <p> View all comments</p>}
+        </div>
+      )}
+      {comments.length < 3 && (
+        <div className="view__all">
+          <p> Comments</p>
+        </div>
+      )}
+
       <div className="post__comments">
-        {comments.map(({ id, comment }) => (
+        {comments.slice(0, 2).map(({ id, comment }) => (
           <>
             {user && user.uid === comment.commentCreaterId && (
               <DeleteOutlineIcon
@@ -209,8 +219,29 @@ function Post({ postId, postCreaterId, user, username, caption, imageurl }) {
             </p>
           </>
         ))}
-      </div>
 
+        {viewmore &&
+          comments.slice(2).map(({ id, comment }) => (
+            <>
+              {user && user.uid === comment.commentCreaterId && (
+                <DeleteOutlineIcon
+                  fontSize="small"
+                  style={{
+                    cursor: "pointer",
+                    float: "right",
+                  }}
+                  onClick={() => {
+                    deleteComment(id, comment);
+                  }}
+                />
+              )}
+
+              <p style={{ textAlign: "justify" }} key={comment.timestamp}>
+                <strong>{comment.username}</strong> {comment.text}
+              </p>
+            </>
+          ))}
+      </div>
       {user && (
         <form className="comment__box">
           <input

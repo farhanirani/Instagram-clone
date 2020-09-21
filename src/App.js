@@ -145,6 +145,7 @@ function App() {
             />
 
             <Button
+              disableElevation
               style={{ marginTop: 20 }}
               variant="contained"
               color="primary"
@@ -179,6 +180,7 @@ function App() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <Button
+              disableElevation
               style={{ marginTop: 20 }}
               variant="contained"
               color="primary"
@@ -214,6 +216,7 @@ function App() {
         <div>
           {user ? (
             <Button
+              disableElevation
               variant="contained"
               color="secondary"
               onClick={() => auth.signOut()}
@@ -222,10 +225,15 @@ function App() {
             </Button>
           ) : (
             <div className="app__logincontainer">
-              <Button variant="contained" onClick={() => setOpen(true)}>
+              <Button
+                disableElevation
+                variant="contained"
+                onClick={() => setOpen(true)}
+              >
                 Sign Up
               </Button>
               <Button
+                disableElevation
                 style={{ marginLeft: 10 }}
                 variant="contained"
                 color="primary"

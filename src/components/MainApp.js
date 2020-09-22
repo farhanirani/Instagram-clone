@@ -9,6 +9,7 @@ import "./MainApp.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { Button, Input } from "@material-ui/core";
+import { lightBlue } from "@material-ui/core/colors";
 
 function getModalStyle() {
   const top = 50;
@@ -30,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     outline: "none",
+  },
+  lightblue: {
+    color: theme.palette.getContrastText(lightBlue[600]),
+    backgroundColor: lightBlue[600],
   },
 }));
 
@@ -106,7 +111,7 @@ function MainApp() {
     if (user && user.displayName) {
       setOpenImageup(true);
     } else {
-      alert("Please login first");
+      alert("Please Sign In first");
     }
   };
 
@@ -148,6 +153,7 @@ function MainApp() {
               disableElevation
               style={{ marginTop: 20 }}
               variant="contained"
+              className={classes.lightblue}
               color="primary"
               type="submit"
               onClick={signup}
@@ -183,6 +189,7 @@ function MainApp() {
               disableElevation
               style={{ marginTop: 20 }}
               variant="contained"
+              className={classes.lightblue}
               color="primary"
               type="submit"
               onClick={signin}
@@ -225,15 +232,11 @@ function MainApp() {
             </Button>
           ) : (
             <div className="app__logincontainer">
-              <Button
-                disableElevation
-                variant="contained"
-                onClick={() => setOpen(true)}
-              >
+              <Button variant="contained" onClick={() => setOpen(true)}>
                 Sign Up
               </Button>
               <Button
-                disableElevation
+                className={classes.lightblue}
                 style={{ marginLeft: 10 }}
                 variant="contained"
                 color="primary"
@@ -250,6 +253,7 @@ function MainApp() {
         <div className="left__side">
           <div className="image__upload__app">
             <Button
+              className={classes.lightblue}
               disableElevation
               variant="contained"
               color="primary"
@@ -264,8 +268,8 @@ function MainApp() {
               key={id}
               postId={id}
               postCreaterId={post.userid}
+              postCreaterUsername={post.username}
               user={user}
-              username={post.username}
               caption={post.caption}
               imageurl={post.imageurl}
             />

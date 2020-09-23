@@ -1,30 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./Post.css";
 import { db } from "../firebase";
+import UserContext from "../context/UserContext";
+
 import firebase from "firebase";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-
 import { IconButton, Avatar } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import { makeStyles } from "@material-ui/core/styles";
-import { deepPurple } from "@material-ui/core/colors";
+import { lightBlue } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
-  purple: {
-    color: theme.palette.getContrastText(deepPurple["A700"]),
-    backgroundColor: deepPurple["A700"],
+  lightblue: {
+    color: theme.palette.getContrastText(lightBlue[600]),
+    backgroundColor: lightBlue[600],
   },
 }));
 
-function Post({ postId, postCreaterId, user, username, caption, imageurl }) {
+function Post({
+  postId,
+  postCreaterId,
+  postCreaterUsername,
+  caption,
+  imageurl,
+}) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState([]);
   const [likes, setLikes] = useState([]);
   const [liked, setLiked] = useState(false);
   const classes = useStyles();
   const [viewmore, setViewmore] = useState(false);
+
+  // userContext hook
+  const { user, setUser } = useContext(UserContext);
 
   // Get the comments
   useEffect(() => {
@@ -141,12 +151,12 @@ function Post({ postId, postCreaterId, user, username, caption, imageurl }) {
     <div className="post">
       <div className="post__header">
         <Avatar
-          className={`post__avatar ${classes.purple}`}
-          alt={username}
+          className={`post__avatar ${classes.lightblue}`}
+          alt={postCreaterUsername}
           src="/static/images/avatar/1.jpg"
         />
 
-        <h3>{username}</h3>
+        <h3>{postCreaterUsername}</h3>
       </div>
       <img
         onDoubleClick={likePost}
@@ -184,7 +194,7 @@ function Post({ postId, postCreaterId, user, username, caption, imageurl }) {
             </IconButton>
           </div>
         </div>
-        <strong>{username}</strong> {caption}
+        <strong>{postCreaterUsername}</strong> {caption}
       </div>
 
       {comments.length > 2 && (

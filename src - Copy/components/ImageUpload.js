@@ -1,13 +1,17 @@
-import { Button, Input } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { storage, db } from ".././firebase";
+import UserContext from "../context/UserContext";
 import firebase from "firebase";
 import "./ImageUpload.css";
+import { Button, Input } from "@material-ui/core";
 
-function ImageUpload({ username, userid }) {
+function ImageUpload() {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [caption, setCaption] = useState("");
+
+  // userContext hook
+  const { user, setUser } = useContext(UserContext);
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -47,10 +51,9 @@ function ImageUpload({ username, userid }) {
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               caption: caption,
               imageurl: url,
-              username: username,
-              userid: userid,
+              username: user.displayName,
+              userid: user.uid,
             });
-
             setProgress(0);
             setCaption("");
             setImage(null);

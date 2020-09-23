@@ -1,6 +1,7 @@
 * {
   scroll-behavior: smooth;
   margin: 0;
+  overflow-x: hidden;
 }
 
 .app__body {
@@ -19,6 +20,8 @@
   .left__side {
     margin: 0px;
     width: 100%;
+    margin-left: -4px;
+    margin-right: -2px;
   }
   .image__upload__app {
     padding: 0 15px;

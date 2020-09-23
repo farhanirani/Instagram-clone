@@ -1,0 +1,8 @@
+.image__upload {
+  display: flex;
+  flex-direction: column;
+}
+
+.image__upload > * {
+  margin-top: 10px;
+}

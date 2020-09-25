@@ -11,7 +11,7 @@ function ImageUpload() {
   const [caption, setCaption] = useState("");
 
   // userContext hook
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const handleChange = (e) => {
     if (e.target.files[0]) {

@@ -25,16 +25,20 @@
   }
 }
 
-.app__header {
+.app__header__main {
   position: sticky;
   top: 0;
   z-index: 1;
   background-color: white;
+  border-bottom: 1px solid lightgray;
+}
+
+.app__header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 20px 20px;
-  border-bottom: 1px solid lightgray;
+  margin: auto;
+  padding: 10px 20px;
+  max-width: 828px;
 }
 
 .app__headerImage {

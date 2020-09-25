@@ -209,45 +209,46 @@ function MainApp() {
             </div>
           </Modal>
         )}
-
-        <div className="app__header">
-          <div>
-            <img
-              onClick={() => {
-                window.scrollTo(0, 0);
-              }}
-              style={{ marginTop: 10 }}
-              className="app__headerImage"
-              src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-              alt=""
-            />
-          </div>
-          <div>
-            {user ? (
-              <Button
-                disableElevation
-                variant="contained"
-                color="secondary"
-                onClick={() => auth.signOut()}
-              >
-                Logout
-              </Button>
-            ) : (
-              <div className="app__logincontainer">
-                <Button variant="contained" onClick={() => setOpen(true)}>
-                  Sign Up
-                </Button>
+        <div className="app__header__main">
+          <div className="app__header">
+            <div>
+              <img
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+                style={{ marginTop: 10 }}
+                className="app__headerImage"
+                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                alt=""
+              />
+            </div>
+            <div>
+              {user ? (
                 <Button
-                  className={classes.lightblue}
-                  style={{ marginLeft: 10 }}
+                  disableElevation
                   variant="contained"
-                  color="primary"
-                  onClick={() => setOpensignin(true)}
+                  color="secondary"
+                  onClick={() => auth.signOut()}
                 >
-                  Sign In
+                  Logout
                 </Button>
-              </div>
-            )}
+              ) : (
+                <div className="app__logincontainer">
+                  <Button variant="contained" onClick={() => setOpen(true)}>
+                    Sign Up
+                  </Button>
+                  <Button
+                    className={classes.lightblue}
+                    style={{ marginLeft: 10 }}
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setOpensignin(true)}
+                  >
+                    Sign In
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

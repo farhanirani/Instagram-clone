@@ -7,7 +7,7 @@
   margin-bottom: 40px;
 }
 
-@media only screen and (max-width: 660px) {
+@media only screen and (max-width: 620px) {
   .post {
     border-left: none;
     border-right: none;
@@ -61,6 +61,10 @@
   outline: none;
   padding: 20px 18px;
   border-top: 1px solid lightgray;
+}
+
+.comment__input::placeholder {
+  opacity: 0.7;
 }
 
 .comment__button {

@@ -3,12 +3,21 @@ import { storage, db } from ".././firebase";
 import UserContext from "../context/UserContext";
 import firebase from "firebase";
 import "./ImageUpload.css";
-import { Button, Input } from "@material-ui/core";
+import { Button, Input, makeStyles } from "@material-ui/core";
+import { lightBlue } from "@material-ui/core/colors";
+
+const useStyles = makeStyles((theme) => ({
+  lightblue: {
+    color: theme.palette.getContrastText(lightBlue[600]),
+    backgroundColor: lightBlue[600],
+  },
+}));
 
 function ImageUpload() {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [caption, setCaption] = useState("");
+  const classes = useStyles();
 
   // userContext hook
   const { user } = useContext(UserContext);
@@ -87,7 +96,7 @@ function ImageUpload() {
           style={{ marginTop: 20 }}
           variant="contained"
           color="primary"
-          className="upload__button"
+          className={`upload__button ${classes.lightblue}`}
           type="submit"
         >
           Upload

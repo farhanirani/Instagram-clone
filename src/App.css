@@ -15,7 +15,11 @@
   margin: 0 15px;
 }
 
-@media only screen and (max-width: 660px) {
+.right__side > * {
+  margin-bottom: 40px;
+}
+
+@media only screen and (max-width: 620px) {
   .left__side {
     margin: 0px;
     width: 100%;
@@ -30,6 +34,7 @@
   top: 0;
   z-index: 1;
   background-color: white;
+  height: 54px;
   border-bottom: 1px solid lightgray;
 }
 
@@ -37,13 +42,28 @@
   display: flex;
   justify-content: space-between;
   margin: auto;
-  padding: 10px 20px;
   max-width: 828px;
+  padding: 0px 20px;
+
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.app__headerimage__36 {
+  height: 36px;
+  position: relative;
+}
+
+.app__headerImage__nav {
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 
 .app__headerImage {
   align-self: center;
-  width: 96px;
+  width: 103px;
   height: auto;
   object-fit: contain;
 }

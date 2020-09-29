@@ -34,6 +34,7 @@ function Post({
   const [viewmore, setViewmore] = useState(false);
 
   // userContext hook
+  // eslint-disable-next-line
   const { user, setUser } = useContext(UserContext);
 
   // Get the comments
@@ -105,7 +106,7 @@ function Post({
         setLiked(true);
       }
     } else {
-      alert("Please login first");
+      alert("Please Sign In first");
     }
   };
 
@@ -202,15 +203,20 @@ function Post({
           {viewmore ? <p> See less</p> : <p> View all comments</p>}
         </div>
       )}
-      {comments.length < 3 && (
+      {comments.length < 3 && comments.length > 0 && (
         <div className="view__all">
           <p> Comments</p>
+        </div>
+      )}
+      {comments.length === 0 && (
+        <div className="view__all">
+          <p>No comments..</p>
         </div>
       )}
 
       <div className="post__comments">
         {comments.slice(0, 2).map(({ id, comment }) => (
-          <>
+          <div key={comment.timestamp}>
             {user && user.uid === comment.commentCreaterId && (
               <DeleteOutlineIcon
                 fontSize="small"
@@ -224,15 +230,15 @@ function Post({
               />
             )}
 
-            <p style={{ textAlign: "justify" }} key={comment.timestamp}>
+            <p style={{ textAlign: "justify" }}>
               <strong>{comment.username}</strong> {comment.text}
             </p>
-          </>
+          </div>
         ))}
 
         {viewmore &&
           comments.slice(2).map(({ id, comment }) => (
-            <>
+            <div key={comment.timestamp}>
               {user && user.uid === comment.commentCreaterId && (
                 <DeleteOutlineIcon
                   fontSize="small"
@@ -246,12 +252,13 @@ function Post({
                 />
               )}
 
-              <p style={{ textAlign: "justify" }} key={comment.timestamp}>
+              <p style={{ textAlign: "justify" }}>
                 <strong>{comment.username}</strong> {comment.text}
               </p>
-            </>
+            </div>
           ))}
       </div>
+
       {user && (
         <form className="comment__box">
           <input

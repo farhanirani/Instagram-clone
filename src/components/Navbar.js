@@ -38,14 +38,13 @@ const useStyles = makeStyles((theme) => ({
 function Navbar() {
   const [modalStyle] = React.useState(getModalStyle);
   const [opensignup, setOpensignup] = useState(false);
-  const [opensignin, setOpensignin] = useState(false);
   const classes = useStyles();
 
   const [username, setUname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, opensignin, setOpensignin } = useContext(UserContext);
   const history = useHistory();
 
   useEffect(() => {

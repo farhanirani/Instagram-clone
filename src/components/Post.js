@@ -35,7 +35,7 @@ function Post({
 
   // userContext hook
   // eslint-disable-next-line
-  const { user, setUser } = useContext(UserContext);
+  const { user, setOpensignin } = useContext(UserContext);
 
   // Get the comments
   useEffect(() => {
@@ -106,7 +106,7 @@ function Post({
         setLiked(true);
       }
     } else {
-      alert("Please Sign In first");
+      setOpensignin(true);
     }
   };
 
@@ -121,7 +121,7 @@ function Post({
       });
       setComment("");
     } else {
-      alert("Please sign in first");
+      setOpensignin(true);
     }
   };
 
@@ -183,7 +183,10 @@ function Post({
             )}
           </div>
           <div className="post__likes__right">
-            <IconButton onClick={deletePost}>
+            <IconButton
+              disabled={!(user && user.uid === postCreaterId)}
+              onClick={deletePost}
+            >
               <DeleteIcon
                 style={
                   user && user.uid === postCreaterId

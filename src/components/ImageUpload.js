@@ -20,7 +20,7 @@ function ImageUpload() {
   const classes = useStyles();
 
   // userContext hook
-  const { user } = useContext(UserContext);
+  const { user, setOpenImageup } = useContext(UserContext);
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -30,7 +30,6 @@ function ImageUpload() {
 
   const handleUpload = (e) => {
     e.preventDefault();
-
     const uploadTask = storage.ref(`images/${image.name}`).put(image);
 
     uploadTask.on(
@@ -69,6 +68,7 @@ function ImageUpload() {
           });
       }
     );
+    setOpenImageup(false);
   };
 
   return (

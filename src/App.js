@@ -9,9 +9,20 @@ import Profile from "./components/Profile";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [opensignin, setOpensignin] = useState(false);
+  const [openImageup, setOpenImageup] = useState(false);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        opensignin,
+        setOpensignin,
+        openImageup,
+        setOpenImageup,
+      }}
+    >
       <BrowserRouter>
         <Navbar />
         <Switch>

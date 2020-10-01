@@ -41,9 +41,10 @@ function HomePage() {
   const [posts, setPosts] = useState([]);
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
-  const [openImageup, setOpenImageup] = useState(false);
 
-  const { user } = useContext(UserContext);
+  const { user, setOpensignin, openImageup, setOpenImageup } = useContext(
+    UserContext
+  );
 
   // to get the data
   useEffect(() => {
@@ -64,7 +65,7 @@ function HomePage() {
     if (user && user.displayName) {
       setOpenImageup(true);
     } else {
-      alert("Please Sign In first");
+      setOpensignin(true);
     }
   };
 

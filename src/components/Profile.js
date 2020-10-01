@@ -28,7 +28,7 @@ function Profile() {
 
   return (
     <div className="app__body">
-      <div>
+      <div className="left__side">
         {posts.length ? (
           posts.map(({ id, post }) => (
             <Post

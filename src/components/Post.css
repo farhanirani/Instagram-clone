@@ -10,7 +10,12 @@
   .post {
     border-left: none;
     border-right: none;
+    border-top: none;
     min-width: 100%;
+    background-color: #fafafa;
+  }
+  .comment__input {
+    background-color: #fafafa;
   }
 }
 

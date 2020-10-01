@@ -29,16 +29,22 @@ function Profile() {
   return (
     <div className="app__body">
       <div>
-        {posts.map(({ id, post }) => (
-          <Post
-            key={id}
-            postId={id}
-            postCreaterId={post.userid}
-            postCreaterUsername={post.username}
-            caption={post.caption}
-            imageurl={post.imageurl}
-          />
-        ))}
+        {posts.length ? (
+          posts.map(({ id, post }) => (
+            <Post
+              key={id}
+              postId={id}
+              postCreaterId={post.userid}
+              postCreaterUsername={post.username}
+              caption={post.caption}
+              imageurl={post.imageurl}
+            />
+          ))
+        ) : (
+          <div>
+            <h1>User hasn't posted yet</h1>
+          </div>
+        )}
       </div>
       <div></div>
     </div>

@@ -5,7 +5,20 @@ function InstagramEmbeds() {
   return (
     <div className="right__side">
       <InstagramEmbed
-        url="https://www.instagram.com/p/CEdLs05FWTn/"
+        url="https://www.instagram.com/p/C/?hl=en"
+        maxWidth={320}
+        hideCaption={false}
+        containerTagName="div"
+        protocol=""
+        injectScript
+        onLoading={() => {}}
+        onSuccess={() => {}}
+        onAfterRender={() => {}}
+        onFailure={() => {}}
+      />
+
+      <InstagramEmbed
+        url="https://www.instagram.com/p/BqGHnxPBkPj/"
         maxWidth={320}
         hideCaption={false}
         containerTagName="div"
@@ -17,7 +30,31 @@ function InstagramEmbeds() {
         onFailure={() => {}}
       />
       <InstagramEmbed
-        url="https://www.instagram.com/p/Bi-hISIghYe/"
+        url="https://www.instagram.com/p/B4TSlGxl0iy/"
+        maxWidth={320}
+        hideCaption={false}
+        containerTagName="div"
+        protocol=""
+        injectScript
+        onLoading={() => {}}
+        onSuccess={() => {}}
+        onAfterRender={() => {}}
+        onFailure={() => {}}
+      />
+      <InstagramEmbed
+        url="https://www.instagram.com/p/B7xOgFjnuiO/"
+        maxWidth={320}
+        hideCaption={false}
+        containerTagName="div"
+        protocol=""
+        injectScript
+        onLoading={() => {}}
+        onSuccess={() => {}}
+        onAfterRender={() => {}}
+        onFailure={() => {}}
+      />
+      <InstagramEmbed
+        url="https://www.instagram.com/p/CFsNZqKFTDx/"
         maxWidth={320}
         hideCaption={false}
         containerTagName="div"

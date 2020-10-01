@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.getContrastText(lightBlue[600]),
     backgroundColor: lightBlue[600],
   },
+  small: {
+    width: theme.spacing(4.2),
+    height: theme.spacing(4.2),
+  },
 }));
 
 function Post({
@@ -152,9 +156,9 @@ function Post({
     <div className="post">
       <div className="post__header">
         <Avatar
-          className={`post__avatar ${classes.lightblue}`}
+          className={`post__avatar ${classes.lightblue} ${classes.small}`}
           alt={postCreaterUsername}
-          src="/static/images/avatar/1.jpg"
+          src="profilepic.jpg"
         />
 
         <h3>{postCreaterUsername}</h3>
@@ -170,7 +174,7 @@ function Post({
           <div className="post__likes">
             <div className="like__logo">
               {liked ? (
-                <FavoriteIcon onClick={likePost} />
+                <FavoriteIcon color="secondary" onClick={likePost} />
               ) : (
                 <FavoriteBorderIcon onClick={likePost} />
               )}

@@ -4,8 +4,23 @@ import UserContext from "../context/UserContext";
 import { useHistory } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Input, Modal } from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  Input,
+  Modal,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
 import { lightBlue } from "@material-ui/core/colors";
+
+import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
+import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
+import HomeIcon from "@material-ui/icons/Home";
+import SendIcon from "@material-ui/icons/Send";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 function getModalStyle() {
   const top = 50;
@@ -31,6 +46,11 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.getContrastText(lightBlue[600]),
     backgroundColor: lightBlue[600],
   },
+  small: {
+    width: theme.spacing(3.8),
+    height: theme.spacing(3.8),
+    cursor: "pointer",
+  },
 }));
 
 //
@@ -46,6 +66,15 @@ function Navbar() {
 
   const { user, setUser, opensignin, setOpensignin } = useContext(UserContext);
   const history = useHistory();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const openMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -165,6 +194,9 @@ function Navbar() {
         </div>
       </Modal>
 
+      {/*
+       */}
+
       <div className="app__header__main">
         <div className="app__header">
           <div className="app__headerimage__36">
@@ -178,52 +210,101 @@ function Navbar() {
               alt=""
             />
           </div>
-          <div>
-            {user ? (
-              <div className="app__logincontainer">
-                <Button
-                  variant="contained"
-                  className={classes.lightblue}
-                  color="primary"
-                  size="small"
+
+          {user ? (
+            <div className="navbar__right__icons">
+              <HomeIcon
+                color="action"
+                className={classes.small}
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  history.push("/");
+                }}
+              />
+              <SendIcon color="action" className={classes.small} />
+              <FavoriteIcon color="action" className={classes.small} />
+              <Avatar
+                className={`${classes.lightblue} ${classes.small}`}
+                alt={user.displayName}
+                src="profilepic.jpg"
+                onClick={openMenu}
+              />
+
+              <Menu
+                className={classes.menu}
+                elevation={5}
+                getContentAnchorEl={null}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "center",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem
                   onClick={() => {
+                    handleClose();
                     history.push("/profile/" + user.uid);
                   }}
                 >
-                  Profile
-                </Button>
-                <Button
-                  style={{ marginLeft: 10 }}
-                  variant="contained"
-                  color="secondary"
-                  size="small"
-                  onClick={() => auth.signOut()}
+                  <ListItemIcon>
+                    <AccountCircleOutlinedIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Profile" />
+                </MenuItem>
+
+                <MenuItem>
+                  <ListItemIcon>
+                    <SettingsOutlinedIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Settings" />
+                </MenuItem>
+
+                <MenuItem
+                  className="log__out__dropdown"
+                  onClick={() => {
+                    handleClose();
+                    auth.signOut();
+                  }}
                 >
-                  Logout
-                </Button>
-              </div>
-            ) : (
-              <div className="app__logincontainer">
-                <Button
-                  variant="contained"
-                  size="small"
-                  onClick={() => setOpensignup(true)}
-                >
-                  Sign Up
-                </Button>
-                <Button
-                  className={classes.lightblue}
-                  style={{ marginLeft: 10 }}
-                  variant="contained"
-                  size="small"
-                  color="primary"
-                  onClick={() => setOpensignin(true)}
-                >
-                  Sign In
-                </Button>
-              </div>
-            )}
-          </div>
+                  <ListItemText primary="Log Out" />
+                </MenuItem>
+              </Menu>
+            </div>
+          ) : (
+            <div className="navbar__right__icons">
+              <HomeIcon
+                color="action"
+                className={classes.small}
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  history.push("/");
+                }}
+              />
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => setOpensignup(true)}
+              >
+                Sign Up
+              </Button>
+              <Button
+                className={classes.lightblue}
+                variant="contained"
+                size="small"
+                color="primary"
+                onClick={() => setOpensignin(true)}
+              >
+                Sign In
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </>

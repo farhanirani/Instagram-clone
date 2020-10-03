@@ -69,7 +69,7 @@ function Navbar() {
 
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const openMenu = (event) => {
+  const openDropDown = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -77,6 +77,7 @@ function Navbar() {
   };
 
   useEffect(() => {
+    // console.log(user);
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         setUser(authUser);
@@ -107,6 +108,9 @@ function Navbar() {
     e.preventDefault();
     auth
       .signInWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        console.log(authUser);
+      })
       .catch((err) => alert(err.message));
     setOpensignin(false);
   };
@@ -226,8 +230,8 @@ function Navbar() {
               <Avatar
                 className={`${classes.lightblue} ${classes.small}`}
                 alt={user.displayName}
-                src="profilepic.jpg"
-                onClick={openMenu}
+                src={user.photoURL ? user.photoURL : "junk.jpg"}
+                onClick={openDropDown}
               />
 
               <Menu

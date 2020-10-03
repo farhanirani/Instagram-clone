@@ -1,0 +1,22 @@
+.upload__profilepic__modal {
+  display: flex;
+  flex-direction: column;
+}
+
+.upload__profilepic__modal > * {
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload__profilepic__modal :first-child {
+  height: 78px;
+}
+
+.upload__profilepic__modal > *:not(:first-child) {
+  height: 48px;
+  border-top: 0.3px solid lightgray !important;
+  cursor: pointer;
+}

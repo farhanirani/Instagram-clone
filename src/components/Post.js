@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import "./Post.css";
 import { db } from "../firebase";
 import UserContext from "../context/UserContext";
+import { useHistory } from "react-router-dom";
 
 import firebase from "firebase";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(4.2),
     height: theme.spacing(4.2),
+    cursor: "pointer",
   },
 }));
 
@@ -36,6 +38,7 @@ function Post({
   const [liked, setLiked] = useState(false);
   const classes = useStyles();
   const [viewmore, setViewmore] = useState(false);
+  const history = useHistory();
 
   // userContext hook
   // eslint-disable-next-line
@@ -159,6 +162,9 @@ function Post({
           className={`post__avatar ${classes.lightblue} ${classes.small}`}
           alt={postCreaterUsername}
           src={`https://firebasestorage.googleapis.com/v0/b/instagram-clone-react-3aadc.appspot.com/o/profilepics%2F${postCreaterId}?alt=media`}
+          onClick={() => {
+            history.push("/profile/" + postCreaterId);
+          }}
         />
 
         <h3>{postCreaterUsername}</h3>

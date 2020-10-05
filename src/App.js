@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import UserContext from "./context/UserContext";
 import "./App.css";
@@ -11,6 +11,12 @@ function App() {
   const [user, setUser] = useState(null);
   const [opensignin, setOpensignin] = useState(false);
   const [openImageup, setOpenImageup] = useState(false);
+  const [imageURL, setImageURL] = useState("");
+
+  useEffect(() => {
+    if (user) setImageURL(user.photoURL);
+    else setImageURL("");
+  }, [user]);
 
   return (
     <UserContext.Provider
@@ -21,6 +27,8 @@ function App() {
         setOpensignin,
         openImageup,
         setOpenImageup,
+        imageURL,
+        setImageURL,
       }}
     >
       <BrowserRouter>

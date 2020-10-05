@@ -45,13 +45,13 @@ const useStyles = makeStyles((theme) => ({
 
 function Profile() {
   const [posts, setPosts] = useState([]);
-  const { user } = useContext(UserContext);
+  const { user, imageURL, setImageURL } = useContext(UserContext);
   const userId = window.location.pathname.substring(9);
 
   const [image, setImage] = useState(null);
   const [openPP, setOpenPP] = useState(false);
 
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = useState(getModalStyle);
   const classes = useStyles();
 
   // to get the data
@@ -78,7 +78,8 @@ function Profile() {
       uploadTask.on(
         "state_changed",
         (snapShot) => {
-          console.log(snapShot);
+          // console.log(snapShot);
+          console.log("uploading ... ");
         },
         (err) => {
           console.log(err);
@@ -93,11 +94,13 @@ function Profile() {
                 .updateProfile({
                   photoURL: url,
                 })
-                .then(() => console.log("Updated"))
+                .then(() => {
+                  setImageURL(url);
+                  console.log("Updated");
+                })
                 .catch((err) => alert(err.message));
               setImage(null);
               setOpenPP(false);
-              window.location.reload();
             });
         }
       );
@@ -118,11 +121,13 @@ function Profile() {
         .updateProfile({
           photoURL: "",
         })
-        .then(() => console.log("Updated"))
+        .then(() => {
+          setImageURL(null);
+          console.log("Updated");
+        })
         .catch((err) => alert(err.message));
       setImage(null);
       setOpenPP(false);
-      window.location.reload();
     }
   };
 
@@ -140,10 +145,10 @@ function Profile() {
             style={{ display: "none" }}
             onChange={imageSelect}
           />
-          <label style={{ color: "blue" }} for="uploadphoto">
+          <label style={{ color: "#0095F6" }} for="uploadphoto">
             Upload Photo
           </label>
-          <label style={{ color: "red" }} onClick={removeImage}>
+          <label style={{ color: "#F27156" }} onClick={removeImage}>
             Remove Current Photo
           </label>
           <label
@@ -161,7 +166,7 @@ function Profile() {
           <Avatar
             className={`${classes.lightblue} ${classes.large}`}
             alt={user.displayName}
-            src={user.photoURL ? user.photoURL : "junk.jpg"}
+            src={imageURL ? imageURL : "junk.jpg"}
             onClick={() => {
               setOpenPP(true);
             }}

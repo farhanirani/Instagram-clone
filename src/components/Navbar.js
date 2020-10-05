@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "70%",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
+    borderRadius: 10,
     padding: theme.spacing(2, 4, 3),
     outline: "none",
   },
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 //
 
 function Navbar() {
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = useState(getModalStyle);
   const [opensignup, setOpensignup] = useState(false);
   const classes = useStyles();
 
@@ -64,7 +65,9 @@ function Navbar() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { user, setUser, opensignin, setOpensignin } = useContext(UserContext);
+  const { user, setUser, opensignin, setOpensignin, imageURL } = useContext(
+    UserContext
+  );
   const history = useHistory();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -230,13 +233,11 @@ function Navbar() {
               <Avatar
                 className={`${classes.lightblue} ${classes.small}`}
                 alt={user.displayName}
-                src={user.photoURL ? user.photoURL : "junk.jpg"}
+                src={imageURL ? imageURL : "junk.jpg"}
                 onClick={openDropDown}
               />
-
               <Menu
-                className={classes.menu}
-                elevation={5}
+                elevation={1}
                 getContentAnchorEl={null}
                 anchorOrigin={{
                   vertical: "bottom",

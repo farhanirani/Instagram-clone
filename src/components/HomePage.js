@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "70%",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
+    borderRadius: 10,
     padding: theme.spacing(2, 4, 3),
     outline: "none",
   },
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 function HomePage() {
   const [posts, setPosts] = useState([]);
   const classes = useStyles();
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = useState(getModalStyle);
 
   const { user, setOpensignin, openImageup, setOpenImageup } = useContext(
     UserContext

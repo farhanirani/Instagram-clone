@@ -17,6 +17,6 @@
 
 .upload__profilepic__modal > *:not(:first-child) {
   height: 48px;
-  border-top: 0.3px solid lightgray !important;
+  border-top: 1px solid lightgray !important;
   cursor: pointer;
 }

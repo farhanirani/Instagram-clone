@@ -158,7 +158,7 @@ function Post({
         <Avatar
           className={`post__avatar ${classes.lightblue} ${classes.small}`}
           alt={postCreaterUsername}
-          src="profilepic.jpg"
+          src={`https://firebasestorage.googleapis.com/v0/b/instagram-clone-react-3aadc.appspot.com/o/profilepics%2F${postCreaterId}?alt=media`}
         />
 
         <h3>{postCreaterUsername}</h3>

@@ -74,7 +74,7 @@ function Profile() {
   // To upload the picture with just one click
   useEffect(() => {
     if (image && user) {
-      const uploadTask = storage.ref(`profilepics/${image.name}`).put(image);
+      const uploadTask = storage.ref(`profilepics/${user.uid}`).put(image);
       uploadTask.on(
         "state_changed",
         (snapShot) => {
@@ -87,7 +87,7 @@ function Profile() {
         () => {
           storage
             .ref("profilepics")
-            .child(image.name)
+            .child(user.uid)
             .getDownloadURL()
             .then((url) => {
               user
@@ -163,14 +163,21 @@ function Profile() {
 
       <div className="left__side">
         {user && user.uid === userId && (
-          <Avatar
-            className={`${classes.lightblue} ${classes.large}`}
-            alt={user.displayName}
-            src={imageURL ? imageURL : "junk.jpg"}
-            onClick={() => {
-              setOpenPP(true);
-            }}
-          />
+          <div className="profile__details">
+            <div className="profile__avatar">
+              <Avatar
+                className={`${classes.lightblue} ${classes.large}`}
+                alt={user.displayName}
+                src={imageURL ? imageURL : "junk.jpg"}
+                onClick={() => {
+                  setOpenPP(true);
+                }}
+              />
+            </div>
+            <div className="profile__info">
+              <h1>{user.displayName}</h1>
+            </div>
+          </div>
         )}
 
         {posts.length ? (

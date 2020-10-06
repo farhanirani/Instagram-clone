@@ -60,6 +60,11 @@
   display: flex;
 }
 
+.asdasdasdasd {
+  display: flex;
+  justify-content: space-between;
+}
+
 .comment__input {
   flex: 1;
   border: none;

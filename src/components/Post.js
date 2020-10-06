@@ -229,45 +229,43 @@ function Post({
 
       <div className="post__comments">
         {comments.slice(0, 2).map(({ id, comment }) => (
-          <div key={comment.timestamp}>
+          <div className="asdasdasdasd" key={comment.timestamp}>
+            <p style={{ textAlign: "justify" }}>
+              <strong>{comment.username}</strong> {comment.text}
+            </p>
+
             {user && user.uid === comment.commentCreaterId && (
               <DeleteOutlineIcon
                 fontSize="small"
                 style={{
                   cursor: "pointer",
-                  float: "right",
                 }}
                 onClick={() => {
                   deleteComment(id, comment);
                 }}
               />
             )}
-
-            <p style={{ textAlign: "justify" }}>
-              <strong>{comment.username}</strong> {comment.text}
-            </p>
           </div>
         ))}
 
         {viewmore &&
           comments.slice(2).map(({ id, comment }) => (
-            <div key={comment.timestamp}>
+            <div className="asdasdasdasd" key={comment.timestamp}>
+              <p style={{ textAlign: "justify" }}>
+                <strong>{comment.username}</strong> {comment.text}
+              </p>
+
               {user && user.uid === comment.commentCreaterId && (
                 <DeleteOutlineIcon
                   fontSize="small"
                   style={{
                     cursor: "pointer",
-                    float: "right",
                   }}
                   onClick={() => {
                     deleteComment(id, comment);
                   }}
                 />
               )}
-
-              <p style={{ textAlign: "justify" }}>
-                <strong>{comment.username}</strong> {comment.text}
-              </p>
             </div>
           ))}
       </div>

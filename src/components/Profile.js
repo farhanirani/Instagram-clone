@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { storage, db, auth } from ".././firebase";
-import firebase from "firebase";
+import { storage, db } from ".././firebase";
 import UserContext from "../context/UserContext";
 
 import Post from "./Post";
@@ -60,8 +59,6 @@ function Profile() {
 
   const [modalStyle] = useState(getModalStyle);
   const classes = useStyles();
-
-  const [currentPro, setCurrentPro] = useState("");
 
   // to get the data
   useEffect(() => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { storage, db } from ".././firebase";
+import { storage, db, auth } from ".././firebase";
+import firebase from "firebase";
 import UserContext from "../context/UserContext";
 
 import Post from "./Post";
@@ -39,6 +40,12 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 30,
     cursor: "pointer",
   },
+  largeNocursor: {
+    width: theme.spacing(18),
+    height: theme.spacing(18),
+    marginTop: 10,
+    marginBottom: 30,
+  },
 }));
 
 //
@@ -53,6 +60,8 @@ function Profile() {
 
   const [modalStyle] = useState(getModalStyle);
   const classes = useStyles();
+
+  const [currentPro, setCurrentPro] = useState("");
 
   // to get the data
   useEffect(() => {
@@ -162,7 +171,7 @@ function Profile() {
       </Modal>
 
       <div className="left__side">
-        {user && user.uid === userId && (
+        {user && user.uid === userId ? (
           <div className="profile__details">
             <div className="profile__avatar">
               <Avatar
@@ -178,6 +187,14 @@ function Profile() {
               <h1>{user.displayName}</h1>
             </div>
           </div>
+        ) : (
+          <div className="other__user__profile">
+            <Avatar
+              className={`${classes.lightblue} ${classes.largeNocursor}`}
+              alt={userId}
+              src={`https://firebasestorage.googleapis.com/v0/b/instagram-clone-react-3aadc.appspot.com/o/profilepics%2F${userId}?alt=media`}
+            />
+          </div>
         )}
 
         {posts.length ? (
@@ -192,7 +209,9 @@ function Profile() {
             />
           ))
         ) : (
-          <h1>No posts yet</h1>
+          <div className="no__posts__yet">
+            <h1>No posts yet</h1>
+          </div>
         )}
       </div>
     </div>

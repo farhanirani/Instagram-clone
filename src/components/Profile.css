@@ -34,3 +34,13 @@
 .profile__info {
   margin-left: 30px;
 }
+
+.no__posts__yet {
+  display: flex;
+  justify-content: center;
+}
+
+.other__user__profile {
+  display: flex;
+  justify-content: center;
+}
